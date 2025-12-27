@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text to SQL</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        textarea { width: 100%; height: 80px; margin-bottom: 10px; }
+        input[type=text] { width: 100%; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        table, th, td { border: 1px solid black; padding: 5px; }
+        th { background-color: #f2f2f2; }
+        button { margin-top: 10px; padding: 10px 15px; }
+    </style>
+</head>
+<body>
+    <h1>Text to SQL Interface</h1>
+
+    <form method="post">
+        <label>Ask a question:</label><br>
+        <textarea name="question" placeholder="">{{ question }}</textarea><br>
+        <button type="submit" name="action" value="Generate SQL">Generate SQL</button><br><br>
+
+        <label>SQL Query:</label><br>
+        <textarea name="sql_query" placeholder="">{{ sql_query }}</textarea><br>
+        <button type="submit" name="action" value="Execute SQL">Execute SQL</button>
+    </form>
+
+    {% if results %}
+        <h2>Results:</h2>
+        <table>
+            <tr>
+                {% for key in results[0].keys() %}
+                    <th>{{ key }}</th>
+                {% endfor %}
+            </tr>
+            {% for row in results %}
+                <tr>
+                    {% for value in row.values() %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
